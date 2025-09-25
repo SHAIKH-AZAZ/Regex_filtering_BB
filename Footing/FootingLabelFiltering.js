@@ -1,5 +1,3 @@
-
-
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -10,11 +8,12 @@ const __dirname = path.dirname(__filename);
 
 // ✅ Path to your JSON file
 const inputPath = path.join(__dirname, "cleaned_texts.json");
-const outputPath = path.join(__dirname, "filtered.json");
+const outputPath = path.join(__dirname, "01output.json");
 
-// ✅ Regex for labels (word boundary + global search)
 const singleLabelRegex =
   /\b(?:F\d+|BF\d+|CF\d+|AF\d+|BRF\d+|Raft-\d+|R\d+|RW\d*|CP\d+|AC\d+)\b/g;
+// const singleLabelRegex =
+  /^\s*(C|F|BF|CP|CF|RW|AC|GC|BC|NC|SW)(\d*[A-Za-z]*)\s*$/;
 
 /**
  * Extracts labels from an array of strings and flattens into single array
@@ -26,9 +25,14 @@ function extractLabelsFromArray(arr) {
 
   for (const str of arr) {
     let match;
-    while ((match = singleLabelRegex.exec(str)) !== null) {
-      allMatches.push(match[0]);
+    
+    match = singleLabelRegex.exec(str)
+    if (!(match == null)) {
+      console.log(match);
+      allMatches.push(match);
+
     }
+    
     singleLabelRegex.lastIndex = 0; // reset regex
   }
 
@@ -46,3 +50,6 @@ const result = extractLabelsFromArray(jsonArray);
 fs.writeFileSync(outputPath, JSON.stringify(result.sort(), null, 2));
 
 console.log(`✅ Done! Extracted labels saved to: ${outputPath}`);
+
+
+

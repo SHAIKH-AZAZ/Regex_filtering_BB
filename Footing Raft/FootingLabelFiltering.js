@@ -10,9 +10,8 @@ const __dirname = path.dirname(__filename);
 const inputPath = path.join(__dirname, "cleaned_texts.json");
 const outputPath = path.join(__dirname, "01output.json");
 
-// Regex for column labels
 const singleLabelRegex =
-  /\b(?:[A-Z]{1,3}-)?(?:BSW|SW|LW|AC|GC|BC|CP|NC|SC|PC|RW|P|C|R)-?\d+[A-Z]*\b/gi;
+  /^\s*(R)(\d+)\s*$/g;
 
 /**
  * Extracts labels from an array of strings and flattens into single array
@@ -49,3 +48,6 @@ const result = extractLabelsFromArray(jsonArray);
 fs.writeFileSync(outputPath, JSON.stringify(result.sort(), null, 2));
 
 console.log(`✅ Done! Extracted labels saved to: ${outputPath}`);
+
+
+
