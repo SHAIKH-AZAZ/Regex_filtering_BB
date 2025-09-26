@@ -1,3 +1,5 @@
+
+// 05 
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -6,44 +8,46 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Path to your JSON file
+// ✅ Path to your JSON file
 const inputPath = path.join(__dirname, "cleaned_texts.json");
-const outputPath = path.join(__dirname, "filtered.json");
+const outputPath = path.join(__dirname, "01output.json");
 
-// ✅ Regex for labels (handles S1, S2, SQ, S1M, STB1, ST, etc.)
-// const singleLabelRegex = /\bS[0-9A-Z]*\b/g;
-// const singleLabelRegex = /\bS(?:\d+[A-Z0-9]*|[A-Z]+(?:\d+)?)\b/g;
-const singleLabelRegex = /\bS(?:(\d{1,3})([A-Z]{1,5})?|([A-Z]{1,5})(\d{1,3})?)\b/g;
-
-
-
-// Optional: If you also want "Section" based matches (e.g., "Section S1")
-// const sectionRegex = /\bSection\s+S[0-9A-Z]*\b/g;
+// ✅ Regex for labels (word boundary + global search)
+const singleLabelRegex =
+  /^\s*(S)(\d+)\s*$/;
 
 /**
- * Extracts labels from an array of strings using a more modern approach.
+ * Extracts labels from an array of strings and flattens into single array
  * @param {string[]} arr - Array of input strings
  * @returns {string[]} all matches
  */
 function extractLabelsFromArray(arr) {
-  return arr.flatMap(str => {
-    const matches = [
-      ...Array.from(str.matchAll(singleLabelRegex), match => match[0])
-    ];
-    return matches;
-  });
+  let allMatches = [];
+
+  for (const str of arr) {
+    let match;
+    
+    match = singleLabelRegex.exec(str)
+    if (!(match == null)) {
+      console.log(match);
+      allMatches.push(match);
+
+    }
+    
+    singleLabelRegex.lastIndex = 0; // reset regex
+  }
+
+  return allMatches;
 }
 
-// --- The rest of the script is the same ---
-
-// Load JSON
+// ✅ Load JSON
 const raw = fs.readFileSync(inputPath, "utf-8");
 const jsonArray = JSON.parse(raw);
 
-// Extract all matches into one array
+// ✅ Extract all matches into one array
 const result = extractLabelsFromArray(jsonArray);
 
-// Save filtered result
-fs.writeFileSync(outputPath, JSON.stringify(result, null, 2));
+// ✅ Save filtered result
+fs.writeFileSync(outputPath, JSON.stringify(result.sort(), null, 2));
 
 console.log(`✅ Done! Extracted labels saved to: ${outputPath}`);
