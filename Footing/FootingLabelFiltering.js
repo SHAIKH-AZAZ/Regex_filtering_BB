@@ -11,7 +11,7 @@ const inputPath = path.join(__dirname, "cleaned_texts.json");
 const outputPath = path.join(__dirname, "01output.json");
 
 const singleLabelRegex =
-  /\b(?:F\d+|BF\d+|CF\d+|AF\d+|BRF\d+|Raft-\d+|R\d+|RW\d*|CP\d+|AC\d+)\b/g;
+  /\b(?:F\d+|BF\d+|CF\d+|AF\d+|BRF\d+|Raft-\d+|R\d+|RW\d*|CP\d+|AC\d+)\b/;
 // const singleLabelRegex =
   /^\s*(C|F|BF|CP|CF|RW|AC|GC|BC|NC|SW)(\d*[A-Za-z]*)\s*$/;
 
@@ -26,7 +26,7 @@ function extractLabelsFromArray(arr) {
   for (const str of arr) {
     let match;
     
-    match = singleLabelRegex.exec(str)
+    match = str.match(singleLabelRegex)
     if (!(match == null)) {
       console.log(match);
       allMatches.push(match);
