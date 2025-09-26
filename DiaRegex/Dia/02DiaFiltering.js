@@ -12,7 +12,7 @@ const outputPath = path.join(__dirname, "filtered.json");
 
 // ✅ Regex for labels (word boundary + global search)
 const singleLabelRegex =
-  /\b(\d+)\s*[-±,]?\s*([YTØ#]|TOR)\s*(\d+)\b/g;
+  /\b(\d+)\s*[-±,]?\s*([YTØ#]|TOR)\s*(\d+)\b/;
 /**
  * Extracts labels from an array of strings and flattens into single array
  * @param {string[]} arr - Array of input strings
@@ -22,12 +22,10 @@ function extractLabelsFromArray(arr) {
   let allMatches = [];
 
   for (const str of arr) {
-    let match;
-    
-    match = singleLabelRegex.exec(str)
-    if (!(match == null)) {
-      console.log(match);
-      allMatches.push([...match]);
+    const m = str.match(singleLabelRegex);
+    if (!(m == null)) {
+      console.log(m);
+      allMatches.push([...m]);
 
     }
     

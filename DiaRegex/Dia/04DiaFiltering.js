@@ -8,14 +8,14 @@ const __dirname = path.dirname(__filename);
 const inputPath = path.join(__dirname, "cleaned_texts.json");
 const outputPath = path.join(__dirname, "filtered.json");
 
-const singleLabelRegex = /^(?:(\d+)\s*)?([TØY]|TOR)\s*(\d+)\s*((?:@\d+(?:\+\d+)*\s*)+)(?:C\/C)?$/u;
+const singleLabelRegex = /^(?:(\d+)\s*)?([TØY]|TOR)\s*(\d+)\s*((?:@\d+(?:\+\d+)*\s*)+)(?:C\/C)?$/;
 
 
 function extractLabelsFromArray(arr) {
   let allMatches = [];
 
   for (const str of arr) {
-    const match = singleLabelRegex.exec(str);
+    const match = str.match(singleLabelRegex)
     if (match) {
       console.log(match);
       allMatches.push([...match]);
