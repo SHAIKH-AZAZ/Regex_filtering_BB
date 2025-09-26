@@ -11,8 +11,7 @@ const inputPath = path.join(__dirname, "cleaned_texts.json");
 const outputPath = path.join(__dirname, "01output.json");
 
 // Regex for column labels
-const singleLabelRegex =
-  /^\s*(\d+)\s*X\s*(\d+)\s*$/gi;
+const singleLabelRegex = /^\s*(\d+)\s*X\s*(\d+)\s*$/gi;
 
 /**
  * Extracts labels from an array of strings and flattens into single array
@@ -24,14 +23,13 @@ function extractLabelsFromArray(arr) {
 
   for (const str of arr) {
     let match;
-    
-    match = singleLabelRegex.exec(str)
+
+    match = str.match(singleLabelRegex);
     if (!(match == null)) {
       console.log(match);
       allMatches.push(match);
-
     }
-    
+
     singleLabelRegex.lastIndex = 0; // reset regex
   }
 

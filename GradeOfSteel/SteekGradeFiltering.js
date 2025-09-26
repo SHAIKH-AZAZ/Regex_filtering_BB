@@ -26,7 +26,7 @@ function extractLabelsFromArray(arr) {
   for (const str of arr) {
     let match;
 
-    match = singleLabelRegex.exec(str);
+    match = str.match(singleLabelRegex)
     if (!(match == null)) {
       // console.log(match.filter(v => v !== null && v !== undefined));
       // allMatches.push(match.filter(v => v !== null && v !== undefined));

@@ -1,5 +1,4 @@
-
-// 05 
+// 05
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -26,14 +25,13 @@ function extractLabelsFromArray(arr) {
 
   for (const str of arr) {
     let match;
-    
-    match = singleLabelRegex.exec(str)
+
+    match = str.match(singleLabelRegex);
     if (!(match == null)) {
       console.log(match);
       allMatches.push(match);
-
     }
-    
+
     singleLabelRegex.lastIndex = 0; // reset regex
   }
 
