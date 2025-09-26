@@ -1,5 +1,5 @@
-cleaned_texts.json
-cleaned_texts_test.json
+# cleaned_texts.json
+# cleaned_texts_test.json
 
 node_modules
 .idea 
