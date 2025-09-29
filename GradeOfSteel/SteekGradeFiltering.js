@@ -1,4 +1,3 @@
-// 05
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -7,47 +6,46 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// ✅ Path to your JSON file
+// Paths
 const inputPath = path.join(__dirname, "cleaned_texts.json");
 const outputPath = path.join(__dirname, "01output.json");
 
-// ✅ Regex for labels (word boundary + global search)
-const singleLabelRegex =
-  /^\s*Fe\s*\d+(?:\s*[A-Za-z]+)?\s*$/i;
+// Regex to match Fe + number (ignore any extra letters or spaces)
+const singleLabelRegex = /\bFe\s*:?\s*(\d+)\b:*/i;
 
 /**
- * Extracts labels from an array of strings and flattens into single array
+ * Extracts labels from an array of strings
  * @param {string[]} arr - Array of input strings
- * @returns {string[]} all matches
+ * @returns {string[]} all matches cleaned
  */
 function extractLabelsFromArray(arr) {
-  let allMatches = [];
+  const allMatches = [];
 
   for (const str of arr) {
-    let match;
-
-    match = str.match(singleLabelRegex)
-    if (!(match == null)) {
-      // console.log(match.filter(v => v !== null && v !== undefined));
-      // allMatches.push(match.filter(v => v !== null && v !== undefined));
+    const match = str.match(singleLabelRegex);
+    if (match) {
       console.log(match);
-      allMatches.push(match);
+      
+      // Combine "Fe" + number only, ignore spaces/extra letters
+      const label = `Fe${match[1]}`;
+      allMatches.push(label);
     }
-
-    singleLabelRegex.lastIndex = 0; // reset regex
   }
 
   return allMatches;
 }
 
-// ✅ Load JSON
+// Load JSON
 const raw = fs.readFileSync(inputPath, "utf-8");
 const jsonArray = JSON.parse(raw);
 
-// ✅ Extract all matches into one array
+// Extract and clean labels
 const result = extractLabelsFromArray(jsonArray);
 
-// ✅ Save filtered result
-fs.writeFileSync(outputPath, JSON.stringify(result.sort(), null, 2));
+// Remove duplicates and sort
+const uniqueSortedResult = [result];
+
+// Save filtered result
+fs.writeFileSync(outputPath, JSON.stringify(uniqueSortedResult, null, 2));
 
 console.log(`✅ Done! Extracted labels saved to: ${outputPath}`);
