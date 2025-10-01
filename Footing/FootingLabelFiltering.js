@@ -11,9 +11,13 @@ const inputPath = path.join(__dirname, "cleaned_texts.json");
 const outputPath = path.join(__dirname, "01output.json");
 
 const singleLabelRegex =
-  /\b(?:F\d+|BF\d+|CF\d+|AF\d+|BRF\d+|Raft-\d+|R\d+|RW\d*|CP\d+|AC\d+)\b/;
+  /\b(?:F\d+|BF\d+|CF\d+|AF\d+|BRF\d+|Raft-\d+|R\d+|RW\d*|CP\d+|AC\d+)\b/gi;
+
+// const singleLabelRegex = /^\s*(C|F|BF|CP|CF|RW|AC|GC|BC|NC|SW)(\d*[A-Za-z]*)\s*$/;
 // const singleLabelRegex =
-  /^\s*(C|F|BF|CP|CF|RW|AC|GC|BC|NC|SW)(\d*[A-Za-z]*)\s*$/;
+// /^\s*(C|F|BF|CP|CF|RW|AF|BRF|BC|NC|SW|AC|RW)(\d+[A-Za-z]*)\s*$/i;
+
+const seperationRegex = /^([A-Za-z-]+)(\d*)$/;
 
 /**
  * Extracts labels from an array of strings and flattens into single array
@@ -24,16 +28,14 @@ function extractLabelsFromArray(arr) {
   let allMatches = [];
 
   for (const str of arr) {
-    let match;
-    
-    match = str.match(singleLabelRegex)
-    if (!(match == null)) {
-      console.log(match);
-      allMatches.push(match);
-
+    const Match = str.match(singleLabelRegex);
+    if (Match) {
+      for (let Smatch of Match) {
+        console.log(Smatch.match(seperationRegex));
+        
+        allMatches.push(Smatch.match(seperationRegex));
+      }
     }
-    
-    singleLabelRegex.lastIndex = 0; // reset regex
   }
 
   return allMatches;
@@ -47,9 +49,6 @@ const jsonArray = JSON.parse(raw);
 const result = extractLabelsFromArray(jsonArray);
 
 // ✅ Save filtered result
-fs.writeFileSync(outputPath, JSON.stringify(result.sort(), null, 2));
+fs.writeFileSync(outputPath, JSON.stringify(result, null, 2));
 
 console.log(`✅ Done! Extracted labels saved to: ${outputPath}`);
-
-
-
