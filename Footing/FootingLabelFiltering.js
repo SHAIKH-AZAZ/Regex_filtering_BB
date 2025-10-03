@@ -11,13 +11,14 @@ const inputPath = path.join(__dirname, "cleaned_texts.json");
 const outputPath = path.join(__dirname, "01output.json");
 
 const singleLabelRegex =
-  /\b(?:F\d+|BF\d+|CF\d+|AF\d+|BRF\d+|Raft-\d+|R\d+|RW\d*|CP\d+|AC\d+)\b/gi;
+  /\b(?:F\d+[A-Za-z]*|BF\d+[A-Za-z]*|CF\d+[A-Za-z]*|AF\d+[A-Za-z]*|BRF\d+[A-Za-z]*|Raft-\d+[A-Za-z]*|R\d+[A-Za-z]*|RW\d*[A-Za-z]*|CP\d+[A-Za-z]*|AC\d+[A-Za-z]*)\b/gi;
 
-// const singleLabelRegex = /^\s*(C|F|BF|CP|CF|RW|AC|GC|BC|NC|SW)(\d*[A-Za-z]*)\s*$/;
-// const singleLabelRegex =
-// /^\s*(C|F|BF|CP|CF|RW|AF|BRF|BC|NC|SW|AC|RW)(\d+[A-Za-z]*)\s*$/i;
+  // this regex is for seperating prefix and suffix
 
-const seperationRegex = /^([A-Za-z-]+)(\d*)$/;
+const seperationRegex = /^([A-Za-z-]+)(\d+[A-Za-z]*)?$/;
+  // const singleLabelRegex = /^\s*(C|F|BF|CP|CF|RW|AC|GC|BC|NC|SW)(\d*[A-Za-z]*)\s*$/;
+  // const singleLabelRegex =
+  // /^\s*(C|F|BF|CP|CF|RW|AF|BRF|BC|NC|SW|AC|RW)(\d+[A-Za-z]*)\s*$/i;
 
 /**
  * Extracts labels from an array of strings and flattens into single array
@@ -28,15 +29,20 @@ function extractLabelsFromArray(arr) {
   let allMatches = [];
 
   for (const str of arr) {
-    const Match = str.match(singleLabelRegex);
-    if (Match) {
-      for (let Smatch of Match) {
-        console.log(Smatch.match(seperationRegex));
-        
-        allMatches.push(Smatch.match(seperationRegex));
+  const Match = str.match(singleLabelRegex);  // returns array or null
+  // console.log(Match);
+
+  if (Match !== null) {
+    for (let Smatch of Match) {
+      const parts = Smatch.match(seperationRegex);
+      if (parts !== null) { 
+        console.log(parts);
+          // ✅ filter null
+        allMatches.push(parts);
       }
     }
   }
+}
 
   return allMatches;
 }

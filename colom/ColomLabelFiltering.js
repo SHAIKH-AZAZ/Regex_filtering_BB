@@ -12,7 +12,10 @@ const outputPath = path.join(__dirname, "01output.json");
 
 // Regex for column labels 
 const singleLabelRegex = /\b(?:[A-Z]{1,3}-)?(?:BSW|SW|LW|AC|GC|BC|CP|NC|SC|PC|RW|P|C|R)-?\d+[A-Z]*\b/gi;
+// note that , this regex will return  array of string .... 
 
+
+// const singleLabelRegex = /^\s*(C|AC|GC|BC|CP|NC|SW)\d+[A-Z]*\s*$/i;
 // this regex is for c1 to c2 like strings 
 // const singleLabelRegex = /\b(?:[A-Z]{1,3}-)?(?:BSW|SW|LW|AC|GC|BC|CP|NC|SC|PC|RW|P|C|R)-?\d+[A-Z]*(?:\s*(?:-|to)\s*\d+[A-Z]*)?\b/gi;
 // original regex const singleLabelRegex = /^\s*(C|AC|GC|BC|CP|NC|SW)\d+[A-Z]*\s*$/i;
