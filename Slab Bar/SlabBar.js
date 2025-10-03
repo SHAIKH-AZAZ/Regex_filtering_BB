@@ -14,6 +14,7 @@ const outputPath = path.join(__dirname, "01output.json");
 // ✅ Regex for labels (word boundary + global search)
 // const singleLabelRegex = /^\s*(?:([A-Za-z]+)\s*[-]?\s*)?(?:([YTOØ]|TOR|#)\s*)?(\d+)\s*(?:@\s*(\d+)\s*(?:c\/c|" c\/c))?\s*$/;
 const singleLabelRegex = /^\s*(?:([A-Za-z]+)\s*-?\s*)?(TOR|[YTOØ#])\s*(\d+)(?:\s*@\s*(\d+)(?:\s*(?:c\/c|C\/C|"?c\/c"?))?)?\s*$/i;
+// have to discuss this regex 
 
 /**
  * Extracts labels from an array of strings and flattens into single array
