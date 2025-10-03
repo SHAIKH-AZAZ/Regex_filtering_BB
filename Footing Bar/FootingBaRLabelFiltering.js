@@ -10,8 +10,10 @@ const __dirname = path.dirname(__filename);
 const inputPath = path.join(__dirname, "cleaned_texts.json");
 const outputPath = path.join(__dirname, "01output.json");
 
+// const singleLabelRegex =
+//   /^\s*(?:([YTOØ]|TOR)\s*)?(\d+)\s*(?:[YTOØ]|TOR)?\s*@\s*(\d+)\s*c\/c\s*$/;
 const singleLabelRegex =
-  /^\s*(?:([YTOØ]|TOR)\s*)?(\d+)\s*(?:[YTOØ]|TOR)?\s*@\s*(\d+)\s*c\/c\s*$/g;
+  /^\s*(?:([YTOØ]|TOR)\s*)?(\d+)\s*(?:[YTOØ]|TOR)?\s*@\s*(\d+)\s*(?:C\/C)?\s*$/iu;
 
 /**
  * Extracts labels from an array of strings and flattens into single array
