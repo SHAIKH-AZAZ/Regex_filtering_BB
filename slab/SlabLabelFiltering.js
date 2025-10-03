@@ -14,7 +14,8 @@ const outputPath = path.join(__dirname, "01output.json");
 
 // ✅ Regex for labels (word boundary + global search)
 const singleLabelRegex =
-  /^\s*(S)(\d+)\s*$/;
+  /^\s*(S)(\d+)\s*$/i;
+// no change in slab regex 
 
 /**
  * Extracts labels from an array of strings and flattens into single array
