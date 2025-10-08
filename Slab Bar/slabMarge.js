@@ -117,6 +117,6 @@ const jsonArray = JSON.parse(raw);
 const result = extractLabelsFromArray(jsonArray);
 
 // ✅ Save filtered result
-fs.writeFileSync(outputPath, JSON.stringify(result.sort(), null, 2));
+fs.writeFileSync(outputPath, JSON.stringify(result, null, 2));
 
 console.log(`✅ Done! Extracted ${result.length} labels saved to: ${outputPath}`);
