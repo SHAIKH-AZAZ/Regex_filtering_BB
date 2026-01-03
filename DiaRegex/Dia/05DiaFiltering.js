@@ -7,7 +7,7 @@ const __dirname = path.dirname(__filename);
 
 const inputPath = path.join(__dirname, "../../cleaned_texts.json");
 const outputPath = path.join(__dirname, "05DiaBar.json");
-const singleLabelRegex =/^(?:(\d+)-)?(\d+)(TOR|T|Y|Φ)(?:[-@])(\d+)((?:\+\d+)*)(?:\s*C\/C)?$/i;
+const singleLabelRegex = /^(?:(\d+)-)?(\d+)(TOR|T|Y|Φ)(?:[-@])(\d+)((?:\+\d+)*)(?:\s*C\/C)?$/i;
 
 let count = 0;
 
@@ -19,7 +19,7 @@ function extractLabelsFromArray(arr) {
     if (match) {
       // console.log(match);
       count++;
-      console.log(count)
+      // console.log(count)
       allMatches.push([...match]);
     }
   }

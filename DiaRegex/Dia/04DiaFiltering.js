@@ -18,9 +18,7 @@ function extractLabelsFromArray(arr) {
   for (const str of arr) {
     const match = str.match(singleLabelRegex)
     if (match) {
-      // console.log(match);
       count++;
-      // console.log(count)
       allMatches.push([...match]);
     }
   }
