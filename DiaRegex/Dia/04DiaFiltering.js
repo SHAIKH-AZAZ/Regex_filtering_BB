@@ -9,6 +9,7 @@ let count = 0;
 
 const inputPath = path.join(__dirname, "../../cleaned_texts.json");
 const outputPath = path.join(__dirname, "04DiaBar.json");
+
 const singleLabelRegex =
   /^(?:(\d+-)\s*)?([TØY]|TOR)\s*(\d+)\s*([-@]\s*\d+(?:\+\d+)*\s*)+(?:C\/C)?(?:\s+.*)?$/i;
 
