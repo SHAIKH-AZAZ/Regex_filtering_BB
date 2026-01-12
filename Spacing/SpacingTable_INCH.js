@@ -12,7 +12,7 @@ const inputPath = path.join(__dirname, "../cleaned_texts.json");
 const outputPath = path.join(__dirname, "SpacingTable_INCH.json");
 
 // ✅ Regex for labels (word boundary + global search)
-const singleLabelRegex = /^\s*(\d+)\s*(?:'|IN)\s*C\/C\s*$/i;
+const singleLabelRegex = /^\s*(\d+)\s*(?:IN)\s*C\/C\s*$/i;
 
 
 // added "-" and "@" support for extraction 
