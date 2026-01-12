@@ -11,30 +11,32 @@ const inputPath = path.join(__dirname, "../cleaned_texts.json");
 const outputPath = path.join(__dirname, "GradeOfConcrete.json");
 
 // ✅ Regex for labels (word boundary + global search)
-const singleLabelRegex = /^M-?\d+$/;
+const singleLabelRegex = /\bM-?\d+\b/g;
+
 
 /**
  * Extracts labels from an array of strings and flattens into single array
  * @param {string[]} arr - Array of input strings
  * @returns {string[]} all matches
  */
+
 function extractLabelsFromArray(arr) {
   let allMatches = [];
 
   for (const str of arr) {
     let match;
 
-    match = str.match(singleLabelRegex)
-    if (!(match == null)) {
-      console.log(match);
-      allMatches.push(match);
+    while ((match = singleLabelRegex.exec(str)) !== null) {
+      console.log(match[0]);       // "M35"
+      allMatches.push(match[0]);  // push only the matched text
     }
 
-    singleLabelRegex.lastIndex = 0; // reset regex
+    singleLabelRegex.lastIndex = 0; // reset for next string
   }
 
   return allMatches;
 }
+
 
 // ✅ Load JSON
 const raw = fs.readFileSync(inputPath, "utf-8");
