@@ -11,6 +11,7 @@ const __dirname = path.dirname(__filename);
 const inputPath = path.join(__dirname, "../cleaned_texts.json");
 const outputPath = path.join(__dirname, "BeamLabels.json");
 
+let count = 0;
 // changed better for better extractiion greedy version normalization
 // label included  HB1 , RR1 , B1 , B1a , P1 , P1a  RB1  , PTBB1 , PB1 SB1 SBT1 MB1 AB1 BB1 FFB1 LB1 LBK1  DB1 TB1 bs1
 const singleLabelRegex =
@@ -26,8 +27,9 @@ function extractLabelsFromArray(arr) {
   for (const str of arr) {
     const matches = [...str.matchAll(singleLabelRegex)];
     for (const m of matches) {
-      console.log(m[0]);
+      // console.log(m[0]);
       allMatches.push(m[0]);
+      count++;
     }
   }
 
@@ -45,3 +47,4 @@ const result = extractLabelsFromArray(jsonArray);
 fs.writeFileSync(outputPath, JSON.stringify(result.sort(), null, 2));
 
 console.log(`✅ Done! Extracted labels saved to: ${outputPath}`);
+console.log(`Total Matches ${count}`);

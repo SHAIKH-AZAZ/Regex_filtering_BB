@@ -8,12 +8,13 @@ const __dirname = path.dirname(__filename);
 
 // ✅ Path to your JSON file
 const inputPath = path.join(__dirname, "../cleaned_texts.json");
-const outputPath = path.join(__dirname, "01output.json");
+const outputPath = path.join(__dirname, "ColumnLabels.json");
+let count = 0;
 
 // Regex for column labels
 const singleLabelRegex =
-  /\b(?:[A-Z]{1,3}-)?(?:ASW|BSW|SW|LW|AC|GC|BC|CP|NC|SC|PC|RW|P|C|R)-?\d+[A-Z]*\b/gi;
-// note that , this regex will return  array of string ....
+  /\b(?:[A-Z]{1,3}-)?(?:ASW|BSW|SW|LW|AC|GC|BC|CP|NC|SC|PC|RW|TW|TA-C|TB-C|TC-C|P|C|R|W)-?\d+(?:[A-Z]+)?(?:-\d+)?\b/gi;
+  // note that , this regex will return  array of string ....
 
 // const singleLabelRegex = /^\s*(C|AC|GC|BC|CP|NC|SW)\d+[A-Z]*\s*$/i;
 // this regex is for c1 to c2 like strings
@@ -35,6 +36,7 @@ function extractLabelsFromArray(arr) {
     if (!(match == null)) {
       console.log(match);
       allMatches.push(...match);
+      count++;
     }
     singleLabelRegex.lastIndex = 0; // reset regex
   }
@@ -54,3 +56,4 @@ const result = extractLabelsFromArray(jsonArray);
 fs.writeFileSync(outputPath, JSON.stringify(result, null, 2));
 
 console.log(`✅ Done! Extracted labels saved to: ${outputPath}`);
+console.log(`Total Matches : ${count}`);
