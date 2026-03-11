@@ -10,6 +10,8 @@ const __dirname = path.dirname(__filename);
 const inputPath = path.join(__dirname, "../../cleaned_texts.json");
 const outputPath = path.join(__dirname, "02DiaRegex.json");
 
+let count = 0;
+
 // ✅ Regex for labels (word boundary + global search)
 const singleLabelRegex = /\b(\d+)\s*[-±,]?\s*([YTØ#]|TOR)\s*(\d+)\b/;
 /**
@@ -24,6 +26,7 @@ function extractLabelsFromArray(arr) {
     const m = str.match(singleLabelRegex);
     if (!(m == null)) {
       console.log(m);
+      count++;
       allMatches.push([...m]);
     }
 
@@ -46,6 +49,7 @@ const result = extractLabelsFromArray(jsonArray);
 fs.writeFileSync(outputPath, JSON.stringify(result, null, 2));
 
 console.log(`✅ Done! Extracted labels saved to: ${outputPath}`);
+console.log(`Total Matches : ${count}`);
 
 /**
  * [
